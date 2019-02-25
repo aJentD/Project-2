@@ -30,7 +30,7 @@ zip_code varchar(5) NOT NULL,
 PRIMARY KEY (id)
 );
 
-CREATE TABLE cart
+CREATE TABLE carts
 (
     id INT NOT NULL AUTO_INCREMENT,
     customer_id INT NOT NULL,

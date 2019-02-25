@@ -25,7 +25,7 @@ module.exports = function(app) {
 
   app.get("/cart/:cart_id", function(req, res) {
     db.cart_contents.findAlldb.Cart_Contents.findAll({
-      attributes: ["id", "quantity"],
+      attributes: ["id", "cart_id", "quantity"],
       where: {
         cart_id: req.params.cart_id
       },
