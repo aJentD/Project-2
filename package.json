@@ -1,5 +1,5 @@
 {
-  "name": "Project 2",
+  "name": "project2",
   "version": "1.0.0",
   "description": "Project 2 Starter",
   "main": "server.js",
@@ -7,7 +7,7 @@
     "start": "node server.js",
     "lint": "eslint **/*.js --quiet",
     "fix": "eslint --fix .",
-    "test": "npm run lint && NODE_ENV=test mocha -u tdd --reporter spec --exit"
+    "test": "SET NODE_ENV=test mocha -u tdd --reporter spec --exit"
   },
   "license": "ISC",
   "dependencies": {
