@@ -2,7 +2,7 @@ var db = require("../models");
 
 module.exports = function(app) {
   // Load index page
-  app.get("/", function(req, res) {
+  app.get("/products", function(req, res) {
     db.products
       .findAll({
         attributes: [
