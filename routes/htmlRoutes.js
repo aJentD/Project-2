@@ -76,33 +76,6 @@ module.exports = function(app) {
       });
   });
 
-  // app.post("/api/cart/:cart_id/:product_id", function(req, res) {
-  //   var myCartId, myParam1, myParam2;
-  //   console.log(req.params.cart_id);
-  //   console.log(req.params.product_id);
-  //   myParam1 = parseInt(req.params.cart_id);
-  //   myParam2 = parseInt(req.params.product_id);
-  //   console.log(myParam1);
-  //   console.log(myParam2);
-
-  //   if (myParam1 === 0) {
-  //     db.cart
-  //       .create({
-  //         customer_id: 0
-  //       })
-  //       .then(function(dbCart) {
-  //         myCartId = dbCart.id; //TEST HERE TO SEE IF THIS GIVE YOU THE CART ID!!!
-  //         console.log(myCartId);
-  //         res.json(JSON.stringify(dbCart));
-  //         //db.cart_contents.create()
-  //       });
-  //   }
-
-    // db.Example.create(req.body).then(function(dbExample) {
-    //   res.json(dbExample);
-    // });
-  });
-
   // Render 404 page for any unmatched routes
   app.get("*", function(req, res) {
     res.render("404");
