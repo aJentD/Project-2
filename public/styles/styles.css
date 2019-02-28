@@ -1,3 +1,88 @@
 .list-group-item {
   line-height: 2.5;
 }
+/* Index Page */
+h2{
+  font-size: 40px;
+  margin: 30px 0px 20px 0px;
+}
+.shopper{
+  margin: 30px 0% 0px 170px;
+  font-size: 30px;
+}         
+
+.carousel-inner{
+  /* width: 150px; */
+}
+
+#login{
+  color: red;
+}
+#guest{
+  color: darkblue;
+}
+ 
+/* Login */
+form{
+  border-radius: 200px;
+  background-color: #f6cd61;
+  padding: 50px 10px 20px 10px;
+  width: 900px;
+  margin: 100px 0px 0px 280px;
+  height: 450px; 
+}
+
+.logintxt{
+  margin: 0px 300px 20px 250px; 
+}
+
+.form-group{
+  margin: 0px 300px 20px 250px; 
+  font-size: 20px;
+  width: 400px;
+}
+
+small{
+  color: grey;
+} 
+.buttons{
+  margin: 30px 0px 0px 350px; 
+  font-size: 20px;
+  cursor: pointer;
+  border-radius: 12px;
+}
+
+#signup{
+  margin-left: 20px;
+}
+
+/* Products Page */
+
+h1 {
+  font-size: 50px;
+  word-break: break-all;
+}
+
+.row {
+  margin: 10px -16px;
+}
+
+.row,
+.row > .column {
+  padding: 8px;
+}
+
+.column {
+  float: left;
+  width: 33.33%;
+  display: none; /* Hide all elements by default */
+}
+
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+
+
