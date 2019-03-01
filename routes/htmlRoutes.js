@@ -76,6 +76,79 @@ module.exports = function(app) {
       });
   });
 
+  app.post("/cart", function(req, res) {
+    var myCartId, myParam1, myParam2;
+
+    myParam1 = parseInt(req.body.cart_id);
+    myParam2 = parseInt(req.body.product_id);
+    myParam3 = parseInt(req.body.quantity);
+
+    if (myParam1 === 0) {
+      db.carts
+        .create({
+          customer_id: 0
+        })
+        .then(function(dbCart) {
+          myCartId = dbCart.id;
+
+          db.cart_contents
+            .create({
+              cart_id: myCartId,
+              product_id: myParam2,
+              quantity: myParam3
+            })
+            .then(function(dbContents) {
+              res.json(JSON.stringify(dbContents));
+            });
+        });
+    } else {
+      db.cart_contents
+        .create({
+          cart_id: myParam1,
+          product_id: myParam2,
+          quantity: myParam3
+        })
+        .then(function(dbContents) {
+          res.json(JSON.stringify(dbContents));
+        });
+    }
+  });
+  app.put("/purchase", function(req, res) {
+    db.carts
+      .update(
+        {
+          date_purchased: db.sequelize.fn("NOW")
+        },
+        {
+          where: { id: req.body.cart_id }
+        }
+      )
+      .then(function(dbCart) {
+        console.log(JSON.stringify(dbCart));
+      })
+      .then(function() {
+        db.products
+          .findAll({
+            raw: true,
+            attributes: [
+              "id",
+              "sku",
+              "product_name",
+              "product_desc",
+              "country",
+              "product_image",
+              "price"
+            ]
+          })
+          .then(function(dbProducts) {
+            console.log(dbProducts);
+            res.render("index", {
+              products: dbProducts
+            });
+          });
+      });
+  });
+
   // Render 404 page for any unmatched routes
   app.get("*", function(req, res) {
     res.render("404");
