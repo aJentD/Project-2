@@ -18,7 +18,7 @@ var API = {
   },
   getExamples: function() {
     return $.ajax({
-      url: "api/examples",
+      url: "api/products",
       type: "GET"
     });
   },
@@ -97,3 +97,14 @@ var handleDeleteBtnClick = function() {
 // Add event listeners to the submit and delete buttons
 $submitBtn.on("click", handleFormSubmit);
 $exampleList.on("click", ".delete", handleDeleteBtnClick);
+$("#clickMe").on("click", function() {
+  alert("clicked!");
+  API.getExamples().then(function(data) {
+    var x = data;
+    for (i = 0; i < data.length; i++) {
+      if (i === 3) {
+        alert(x[i].product_name);
+      }
+    }
+  });
+});

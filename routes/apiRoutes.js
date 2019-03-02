@@ -4,7 +4,7 @@ module.exports = function(app) {
   //retrieve all products
   app.get("/api/products", function(req, res) {
     console.log(db.products);
-    db.products.findAll({ timestamps: false }).then(function(dbProducts) {
+    db.products.findAll({}).then(function(dbProducts) {
       res.json(dbProducts);
     });
   });
@@ -45,31 +45,62 @@ module.exports = function(app) {
   //Step 1.  If :cart_id = 0, create a new record in cart table and set the id.
   //Step 2.  If :cart_id <> 0, create a new item in cart_contents table.
 
-  app.post("/api/cart/:cart_id/:product_id", function(req, res) {
+  app.post("/api/cart", function(req, res) {
     var myCartId, myParam1, myParam2;
-    console.log(req.params.cart_id);
-    console.log(req.params.product_id);
-    myParam1 = parseInt(req.params.cart_id);
-    myParam2 = parseInt(req.params.product_id);
-    console.log(myParam1);
-    console.log(myParam2);
+
+    myParam1 = parseInt(req.body.cart_id);
+    myParam2 = parseInt(req.body.product_id);
+    myParam3 = parseInt(req.body.quantity);
 
     if (myParam1 === 0) {
-      db.cart
+      db.carts
         .create({
           customer_id: 0
         })
         .then(function(dbCart) {
-          myCartId = dbCart.id; //TEST HERE TO SEE IF THIS GIVE YOU THE CART ID!!!
-          console.log(myCartId);
-          res.json(JSON.stringify(dbCart));
-          //db.cart_contents.create()
+          myCartId = dbCart.id;
+
+          db.cart_contents
+            .create({
+              cart_id: myCartId,
+              product_id: myParam2,
+              quantity: myParam3
+            })
+            .then(function(dbContents) {
+              res.json(JSON.stringify(dbContents));
+            });
+        });
+    } else {
+      db.cart_contents
+        .create({
+          cart_id: myParam1,
+          product_id: myParam2,
+          quantity: myParam3
+        })
+        .then(function(dbContents) {
+          res.json(JSON.stringify(dbContents));
         });
     }
 
     // db.Example.create(req.body).then(function(dbExample) {
     //   res.json(dbExample);
     // });
+  });
+  app.put("/api/cart", function(req, res) {
+    var myParam1, myParam2, myParam3;
+
+    myParam1 = parseInt(req.body.cart_id);
+    myParam2 = parseInt(req.body.product_id);
+    myParam3 = parseInt(req.body.quantity);
+
+    db.cart_contents
+      .update(
+        { quantity: myParam3 },
+        { where: { cart_id: myParam1, product_id: myParam2 } }
+      )
+      .then(function(dbContents) {
+        res.json(JSON.stringify(dbContents));
+      });
   });
 
   // Delete an example by id
