@@ -1,6 +1,6 @@
 var db = require("../models");
 
-module.exports = function(app) {
+module.exports = function(app, passport) {
   // Load Products page
   app.get("/products", function(req, res) {
     db.products
@@ -125,34 +125,54 @@ module.exports = function(app) {
       )
       .then(function(dbCart) {
         console.log(JSON.stringify(dbCart));
-      })
-      .then(function() {
-        db.products
-          .findAll({
-            raw: true,
-            attributes: [
-              "id",
-              "sku",
-              "product_name",
-              "product_desc",
-              "country",
-              "product_image",
-              "price"
-            ]
-          })
-          .then(function(dbProducts) {
-            console.log(dbProducts);
-            res.render("index", {
-              products: dbProducts
-            });
-          });
+        res.redirect("/products");
       });
+  });
+
+  app.get("/signup", function(req, res) {
+    res.render("signup");
+  });
+
+  app.get("/signin", function(req, res) {
+    res.render("signin");
+  });
+
+  app.post(
+    "/signup",
+    passport.authenticate("local-signup", {
+      successRedirect: "/dashboard",
+
+      failureRedirect: "/signup"
+    })
+  );
+
+  app.post(
+    "/signin",
+    passport.authenticate("local-signin", {
+      successRedirect: "/dashboard",
+
+      failureRedirect: "/signin"
+    })
+  );
+
+  app.get("/dashboard", isLoggedIn, function(req, res) {
+    res.render("dashboard");
+  });
+  app.get("/logout", function(req, res) {
+    res.redirect("products");
   });
 
   // Render 404 page for any unmatched routes
   app.get("*", function(req, res) {
     res.render("404");
   });
+
+  function isLoggedIn(req, res, next) {
+    if (req.isAuthenticated()) {
+      return next();
+    }
+    res.redirect("/signin");
+  }
 };
 
 //Original code
