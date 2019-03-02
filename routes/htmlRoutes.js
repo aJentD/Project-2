@@ -1,6 +1,9 @@
 var db = require("../models");
 
 module.exports = function(app, passport) {
+  app.get("/", function(req, res) {
+    res.render("index");
+  });
   // Load Products page
   app.get("/products", function(req, res) {
     db.products
@@ -18,7 +21,7 @@ module.exports = function(app, passport) {
       })
       .then(function(dbProducts) {
         console.log(dbProducts);
-        res.render("index", {
+        res.render("products", {
           products: dbProducts
         });
       });
