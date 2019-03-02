@@ -1,0 +1,20 @@
+{{!-- <script id="products-template" type="x-handlebars-template"> --}}
+<table id="products">
+    <tbody class="product-list">
+        {{#each products}}
+        <tr>
+            <td>
+                {{product_name}}
+            </td>
+            <td>
+                {{!-- <img src={{product_image}}> --}}
+            </td>
+            <td>
+                <button data-id={{id}} class="details">View
+                    Details</button>
+            </td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+{{!-- </script> --}}
