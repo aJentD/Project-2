@@ -1,0 +1,53 @@
+<div class="container sCart">
+    <div class="row">
+        <div class="col-md-12">
+            <h3>Shopping Cart</h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <h4>Click the GhostPal button to complete your purchase</h4>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="cartZone">
+                <table class="table">
+
+
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>
+                                Product Name
+                            </th>
+                            <th>
+                                Quantity
+                            </th>
+                            <th>
+                                Price
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each dbContents}}
+                        <tr>
+                            <td>
+                                {{dbContents.product_name}}
+                            </td>
+                            <td>
+                                {{dbContents.quantity}}
+                            </td>
+                            <td>
+                                {{dbContents.price}}
+                            </td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+
+                </table>
+
+            </div>
+        </div>
+    </div>
+
+</div>

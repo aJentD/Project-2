@@ -2,7 +2,9 @@ var db = require("../models");
 
 module.exports = function(app, passport) {
   app.get("/", function(req, res) {
-    res.render("index");
+    res.render("index", {
+      title: "ATW80 Home"
+    });
   });
   // Load Products page
   app.get("/products", function(req, res) {
@@ -22,6 +24,7 @@ module.exports = function(app, passport) {
       .then(function(dbProducts) {
         console.log(dbProducts);
         res.render("products", {
+          title: "ATW80 Products",
           products: dbProducts
         });
       });
@@ -39,9 +42,10 @@ module.exports = function(app, passport) {
         },
         include: db.products
       })
-      .then(function(dbCartContents) {
+      .then(function(dbContents) {
         res.render("shoppingcart", {
-          cart_contents: dbCartContents
+          title: "ATW80 Shopping Cart",
+          dbContents: dbContents
         });
       });
   });
@@ -63,8 +67,8 @@ module.exports = function(app, passport) {
         where: { id: req.params.id }
       })
       .then(function(dbProducts) {
-        console.log(dbProducts);
-        res.render("example", {
+        res.render("products", {
+          title: "ATW80 Product Details",
           products: dbProducts
         });
       });
@@ -88,11 +92,14 @@ module.exports = function(app, passport) {
           db.cart_contents
             .create({
               cart_id: myCartId,
-              product_id: myParam2,
               quantity: myParam3
             })
             .then(function(dbContents) {
-              res.json(JSON.stringify(dbContents));
+              console.log(dbContents);
+              res.render("shoppingcart", {
+                title: "ATW80 Shopping Cart",
+                dbContents: dbContents
+              });
             });
         });
     } else {
@@ -102,8 +109,11 @@ module.exports = function(app, passport) {
           product_id: myParam2,
           quantity: myParam3
         })
-        .then(function(dbContents) {
-          res.json(JSON.stringify(dbContents));
+        .then(function(dbProducts) {
+          res.render("products", {
+            title: "ATW80 Product Details",
+            products: dbProducts
+          });
         });
     }
   });
@@ -119,16 +129,22 @@ module.exports = function(app, passport) {
       )
       .then(function(dbCart) {
         console.log(JSON.stringify(dbCart));
-        res.redirect("/products");
+        res.redirect("/products", {
+          title: "ATW80 Products"
+        });
       });
   });
 
   app.get("/signup", function(req, res) {
-    res.render("signup");
+    res.render("signup", {
+      title: "ATW80 Signup"
+    });
   });
 
   app.get("/signin", function(req, res) {
-    res.render("signin");
+    res.render("signin", {
+      title: "ATW80 Signin"
+    });
   });
 
   app.post(
@@ -153,7 +169,7 @@ module.exports = function(app, passport) {
     res.render("dashboard");
   });
   app.get("/logout", function(req, res) {
-    res.redirect("products");
+    res.redirect("/products");
   });
 
   // Render 404 page for any unmatched routes
