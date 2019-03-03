@@ -28,32 +28,22 @@ module.exports = function(app, passport) {
   });
   //Display Cart Contents
   app.get("/cart/:cart_id", function(req, res) {
-    db.cart_contents.findAlldb.Cart_Contents.findAll({
-      raw: true,
-      attributes: ["id", "cart_id", "quantity"],
-      where: {
-        cart_id: req.params.cart_id
-      },
-      include: [
-        {
-          model: Products,
-          attributes: [
-            "id",
-            "sku",
-            "product_name",
-            "product_desc",
-            "country",
-            "product_image",
-            "price"
-          ],
-          where: { id: Sequelize.col("cart_content.project_id") }
-        }
-      ]
-    }).then(function(dbCartContents) {
-      res.render("shoppingcart", {
-        cart_contents: dbCartContents
+    // res.render("shoppingcart");
+    // return;
+    db.cart_contents
+      .findAll({
+        raw: true,
+        attributes: ["id", "cart_id", "product_id", "quantity"],
+        where: {
+          cart_id: req.params.cart_id
+        },
+        include: db.products
+      })
+      .then(function(dbCartContents) {
+        res.render("shoppingcart", {
+          cart_contents: dbCartContents
+        });
       });
-    });
   });
 
   // Load Product page and pass in the product id
@@ -73,6 +63,7 @@ module.exports = function(app, passport) {
         where: { id: req.params.id }
       })
       .then(function(dbProducts) {
+        console.log(dbProducts);
         res.render("example", {
           products: dbProducts
         });
@@ -143,7 +134,7 @@ module.exports = function(app, passport) {
   app.post(
     "/signup",
     passport.authenticate("local-signup", {
-      successRedirect: "/dashboard",
+      successRedirect: "/products",
 
       failureRedirect: "/signup"
     })
@@ -152,7 +143,7 @@ module.exports = function(app, passport) {
   app.post(
     "/signin",
     passport.authenticate("local-signin", {
-      successRedirect: "/dashboard",
+      successRedirect: "/products",
 
       failureRedirect: "/signin"
     })
