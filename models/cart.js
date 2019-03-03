@@ -10,8 +10,7 @@ module.exports = function(sequelize, DataTypes) {
         type: DataTypes.DATE
       }
     },
-    { timestamps: false }
+    { timestamps: false, underscored: true }
   );
-  // Cart.hasOne(Member);
   return Carts;
 };

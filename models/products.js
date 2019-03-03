@@ -42,7 +42,7 @@ module.exports = function(sequelize, DataTypes) {
         allowNull: false
       }
     },
-    { timestamps: false }
+    { timestamps: false, underscored: true }
   );
 
   return Products;
