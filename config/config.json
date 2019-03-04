@@ -1,7 +1,11 @@
 {
   "development": {
     "username": "root",
+<<<<<<< HEAD
     "password": "honey82FART",
+=======
+    "password": "13450943sB*",
+>>>>>>> master
     "database": "atw80db",
     "host": "localhost",
     "port": 3306,
