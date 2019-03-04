@@ -1,0 +1,14 @@
+.sCart {
+  background-color: #c2d3d3;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+#cartTitle {
+  font-size: 3em;
+  font-weight: bold;
+  margin-bottom: 20px;
+  padding: 0;
+}
+.UC {
+  padding-bottom: 20px;
+}
