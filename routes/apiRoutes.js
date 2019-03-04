@@ -22,22 +22,20 @@ module.exports = function(app) {
   });
 
   // Get all items in the cart
-  app.get("/api/cart_contents/:cart_id", function(req, res) {
+  app.get("/api/cart/:cart_id", function(req, res) {
     db.cart_contents
       .findAll({
+        raw: true,
+        attributes: ["id", "cart_id", "product_id", "quantity"],
         where: {
           cart_id: req.params.cart_id
         },
-        include: [
-          {
-            model: Products,
-            where: { id: Sequelize.col("cart_content.project_id") }
-          }
-        ]
+        include: db.products
       })
-      .then(function(dbCartContents) {
+      .then(function(dbContents) {
         //pass back data
-        res.json(dbCartContents);
+        console.log(dbContents);
+        res.json(dbContents);
       });
   });
 
@@ -67,7 +65,7 @@ module.exports = function(app) {
               quantity: myParam3
             })
             .then(function(dbContents) {
-              res.json(JSON.stringify(dbContents));
+              return res.json(JSON.stringify(dbContents));
             });
         });
     } else {
