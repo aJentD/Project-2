@@ -28,7 +28,7 @@ ATW80 is using Passport.js as the piece of technology not covered in class.  Pas
 ## Location ##
 The application is hosted on Heroku.  Navigating to the app can be done by clicking the URL below:
 
-https://atw80-201903051.herokuapp.com[https://atw80-201903051.herokuapp.com]
+https://atw80-201903051.herokuapp.com
 
 
 
