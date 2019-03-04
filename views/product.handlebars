@@ -20,3 +20,95 @@
       </div>
     </div>
   </nav>
+
+{{!-- Products Modal --}}
+
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalQuickView">Launch modal</button>
+<!-- Modal: modalQuickView -->
+<div class="modal fade" id="modalQuickView" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-lg-5">
+              
+                {{!-- Products --}}
+                <div class="image">
+                  <img class="d-block w-100" src="img/imv" + {{this.product_img}}>
+                </div>
+
+          </div>
+
+          <div class="col-lg-7">
+            <h2 class="h2-responsive product-name">
+              <strong>{{this.product_name}}</strong>
+            </h2>
+            <h4 class="h4-responsive">
+              <span class="green-text">
+                <strong>{{this.price}}</strong>
+              </span>
+            </h4>
+
+            <!--Accordion wrapper-->
+            <div class="accordion md-accordion" id="accordionEx" role="tablist" aria-multiselectable="true">
+
+              <!-- Accordion card -->
+              <div class="card">
+
+                <!-- Card header -->
+                <div class="card-header" role="tab" id="headingOne1">
+                  <a data-toggle="collapse" data-parent="#accordionEx" href="#collapseOne1" aria-expanded="true"
+                    aria-controls="collapseOne1">
+                    <h5 class="mb-0">
+                      Description <i class="fas fa-angle-down rotate-icon"></i>
+                    </h5>
+                  </a>
+                </div>
+
+                <!-- Card body -->
+                <div id="collapseOne1" class="collapse show" role="tabpanel" aria-labelledby="headingOne1"
+                  data-parent="#accordionEx">
+                  <div class="card-body">
+                    {{this.product_desc}}
+                  </div>
+                </div>
+
+              </div>
+              <!-- Accordion card -->
+         
+
+            </div>
+            <!-- Accordion wrapper -->
+
+
+            <!-- Add to Cart -->
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-6">
+
+                  <select class="md-form mdb-select colorful-select dropdown-primary">
+                    <option value="" disabled selected>Choose your option</option>
+                    <option value="1">White</option>
+                    <option value="2">Black</option>
+                    <option value="3">Pink</option>
+                  </select>
+                  <label>Select Quantity</label>
+
+                </div>
+              </div>
+              <div class="text-center">
+
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button class="btn btn-primary" id="addToCart">Add to cart
+                  <i class="fas fa-cart-plus ml-2" aria-hidden="true"></i>
+                </button>
+              </div>
+            </div>
+            <!-- /.Add to Cart -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
