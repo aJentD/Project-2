@@ -30,6 +30,33 @@ module.exports = function(app, passport) {
       });
   });
   //Display Cart Contents
+<<<<<<< HEAD
+  app.get("/shoppingcart/:cart_id", function(req, res) {
+    db.cart_contents.findAlldb.Cart_Contents.findAll({
+      raw: true,
+      attributes: ["id", "cart_id", "quantity"],
+      where: {
+        cart_id: req.params.cart_id
+      },
+      include: [
+        {
+          model: Products,
+          attributes: [
+            "id",
+            "sku",
+            "product_name",
+            "product_desc",
+            "country",
+            "product_image",
+            "price"
+          ],
+          where: { id: Sequelize.col("cart_content.project_id") }
+        }
+      ]
+    }).then(function(dbCartContents) {
+      res.render("shoppingcart", {
+        cart_contents: dbCartContents
+=======
   app.get("/cart", function(req, res) {
     // res.render("shoppingcart");
     // return;
@@ -47,11 +74,13 @@ module.exports = function(app, passport) {
           title: "ATW80 Shopping Cart",
           dbContents: dbContents
         });
+>>>>>>> master
       });
   });
 
   // Load Product page and pass in the product id
   app.get("/products/:id", function(req, res) {
+    console.log(req.params.id);
     db.products
       .findOne({
         raw: true,
@@ -67,14 +96,18 @@ module.exports = function(app, passport) {
         where: { id: req.params.id }
       })
       .then(function(dbProducts) {
+<<<<<<< HEAD
+        res.render("detail", {
+=======
         res.render("products", {
           title: "ATW80 Product Details",
+>>>>>>> master
           products: dbProducts
         });
       });
   });
 
-  app.post("/cart", function(req, res) {
+  app.post("/shoppingcart", function(req, res) {
     var myCartId, myParam1, myParam2;
 
     myParam1 = parseInt(req.body.cart_id);

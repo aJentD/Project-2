@@ -1,3 +1,60 @@
+<<<<<<< HEAD
+<div class="container">
+	<table id="cart" class="table table-hover table-condensed">
+		<thead>
+			<tr>
+				<th style="width:50%">Product</th>
+				<th style="width:10%">Price</th>
+				<th style="width:8%">Quantity</th>
+				<th style="width:22%" class="text-center">Subtotal</th>
+				<th style="width:10%"></th>
+			</tr>
+		</thead>
+		<tbody id="prod-details">
+			<tr>
+				<td data-th="Product">
+					<div class="row">
+						<div class="col-sm-2 hidden-xs"><img src="/public/app/img/inv/+ {{this.product_img}}" alt="..."
+								class="img-responsive" /></div>
+						<div class="col-sm-10">
+							<h4 class="nomargin">{{products.product_name}}</h4>
+							<p>{{products.product_desc}}</p>
+						</div>
+					</div>
+				</td>
+				<td data-th="Price">{{products.price}}</td>
+				<td data-th="Quantity">
+					<input type="number" class="form-control text-center" value="1">
+				</td>
+				<td data-th="Subtotal" class="text-center">{{products.price}}</td>
+				<td class="actions" data-th="">
+					<button class="btn btn-info btn-sm"><i class="fa fa-refresh"></i></button>
+					<button class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i></button>
+				</td>
+			</tr>
+		</tbody>
+		<tfoot>
+			<tr class="visible-xs">
+				<td class="text-center"><strong>Total 1.99</strong></td>
+			</tr>
+			<tr>
+				<td><a href="/views/products.handlebars" class="btn btn-warning"><i class="fa fa-angle-left"></i>
+						Continue Shopping</a></td>
+				<td colspan="2" class="hidden-xs"></td>
+				<td class="hidden-xs text-center"><strong>Total $1.99</strong></td>
+				<td><a href="/views/ghostpal.handlebars" class="btn btn-success btn-block" id="GhostPal">Checkout <i
+							class="fa fa-angle-right"></i></a></td>
+			</tr>
+		</tfoot>
+	</table>
+</div>
+<botton>Ghost Pal</botton>
+{{!-- <div class="card mt-4">
+        
+        </div>
+    </div>
+</div>
+=======
 <div class="container sCart">
     <div class="row">
         <div class="col-md-12">
@@ -48,3 +105,4 @@
 
 </div>
 <script src="../js/shoppingCart.js"></script>
+>>>>>>> master
