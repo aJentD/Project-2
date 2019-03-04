@@ -29,11 +29,13 @@ module.exports = function(app) {
         attributes: ["id", "cart_id", "product_id", "quantity"],
         where: {
           cart_id: req.params.cart_id
-        }
+        },
+        include: db.products
       })
-      .then(function(dbCartContents) {
+      .then(function(dbContents) {
         //pass back data
-        res.json(dbCartContents);
+        console.log(dbContents);
+        res.json(dbContents);
       });
   });
 
@@ -63,7 +65,7 @@ module.exports = function(app) {
               quantity: myParam3
             })
             .then(function(dbContents) {
-              res.json(JSON.stringify(dbContents));
+              return res.json(JSON.stringify(dbContents));
             });
         });
     } else {

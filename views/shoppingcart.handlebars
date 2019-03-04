@@ -1,7 +1,7 @@
 <div class="container sCart">
     <div class="row">
         <div class="col-md-12">
-            <h3>Shopping Cart</h3>
+            <h3 id="cartTitle" class="text-center">Shopping Cart</h3>
         </div>
     </div>
     <div class="row">
@@ -12,7 +12,7 @@
     <div class="row">
         <div class="col-md-12">
             <div class="cartZone">
-                <table class="table">
+                <table id="myTable" class="table">
 
 
                     <thead class="thead-dark">
@@ -29,19 +29,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {{#each dbContents}}
-                        <tr>
-                            <td>
-                                {{dbContents.product_name}}
-                            </td>
-                            <td>
-                                {{dbContents.quantity}}
-                            </td>
-                            <td>
-                                {{dbContents.price}}
-                            </td>
-                        </tr>
-                        {{/each}}
+
                     </tbody>
 
                 </table>
@@ -49,5 +37,14 @@
             </div>
         </div>
     </div>
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <a href="/products"> <button>Back to Products List</button></a>
+            <a href="/purchase"><button><i class="fas fa-ghost"></i> Pay with GhostPal</button></a>
+        </div>
+        <button id="testSS">to test session storage</button>
+
+    </div>
 
 </div>
+<script src="../js/shoppingCart.js"></script>

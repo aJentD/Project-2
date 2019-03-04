@@ -23,14 +23,14 @@ module.exports = function(app, passport) {
       })
       .then(function(dbProducts) {
         console.log(dbProducts);
-        res.render("products", {
+        res.render("altproducts", {
           title: "ATW80 Products",
           products: dbProducts
         });
       });
   });
   //Display Cart Contents
-  app.get("/cart/:cart_id", function(req, res) {
+  app.get("/cart", function(req, res) {
     // res.render("shoppingcart");
     // return;
     db.cart_contents
@@ -43,7 +43,7 @@ module.exports = function(app, passport) {
         include: db.products
       })
       .then(function(dbContents) {
-        res.render("shoppingcart", {
+        return res.render("shoppingcart", {
           title: "ATW80 Shopping Cart",
           dbContents: dbContents
         });
@@ -92,14 +92,11 @@ module.exports = function(app, passport) {
           db.cart_contents
             .create({
               cart_id: myCartId,
+              product_id: myParam2,
               quantity: myParam3
             })
             .then(function(dbContents) {
-              console.log(dbContents);
-              res.render("shoppingcart", {
-                title: "ATW80 Shopping Cart",
-                dbContents: dbContents
-              });
+              res.redirect("/cart/" + myCartId);
             });
         });
     } else {
@@ -109,13 +106,19 @@ module.exports = function(app, passport) {
           product_id: myParam2,
           quantity: myParam3
         })
-        .then(function(dbProducts) {
-          res.render("products", {
-            title: "ATW80 Product Details",
-            products: dbProducts
-          });
+        .then(function(dbContents) {
+          console.log("2");
+          // res.render("shoppingcart", {
+          //   title: "ATW80 Shopping Cart",
+          //   dbContents: dbContents
+          // });
+          res.redirect("/cart/" + myParam1);
         });
     }
+  });
+
+  app.get("/purchase", function(req, res) {
+    res.render("confirmation");
   });
   app.put("/purchase", function(req, res) {
     db.carts
@@ -129,9 +132,7 @@ module.exports = function(app, passport) {
       )
       .then(function(dbCart) {
         console.log(JSON.stringify(dbCart));
-        res.redirect("/products", {
-          title: "ATW80 Products"
-        });
+        res.render("confirmation");
       });
   });
 
