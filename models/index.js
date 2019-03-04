@@ -39,4 +39,7 @@ Object.keys(db).forEach(function(modelName) {
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
+db.cart_contents.belongsTo(db.products);
+db.products.hasMany(db.cart_contents);
+
 module.exports = db;

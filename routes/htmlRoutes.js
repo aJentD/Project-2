@@ -2,7 +2,9 @@ var db = require("../models");
 
 module.exports = function(app, passport) {
   app.get("/", function(req, res) {
-    res.render("index");
+    res.render("index", {
+      title: "ATW80 Home"
+    });
   });
   // Load Products page
   app.get("/products", function(req, res) {
@@ -21,39 +23,31 @@ module.exports = function(app, passport) {
       })
       .then(function(dbProducts) {
         console.log(dbProducts);
-        res.render("products", {
+        res.render("altproducts", {
+          title: "ATW80 Products",
           products: dbProducts
         });
       });
   });
   //Display Cart Contents
-  app.get("/cart/:cart_id", function(req, res) {
-    db.cart_contents.findAlldb.Cart_Contents.findAll({
-      raw: true,
-      attributes: ["id", "cart_id", "quantity"],
-      where: {
-        cart_id: req.params.cart_id
-      },
-      include: [
-        {
-          model: Products,
-          attributes: [
-            "id",
-            "sku",
-            "product_name",
-            "product_desc",
-            "country",
-            "product_image",
-            "price"
-          ],
-          where: { id: Sequelize.col("cart_content.project_id") }
-        }
-      ]
-    }).then(function(dbCartContents) {
-      res.render("shoppingcart", {
-        cart_contents: dbCartContents
+  app.get("/cart", function(req, res) {
+    // res.render("shoppingcart");
+    // return;
+    db.cart_contents
+      .findAll({
+        raw: true,
+        attributes: ["id", "cart_id", "product_id", "quantity"],
+        where: {
+          cart_id: req.params.cart_id
+        },
+        include: db.products
+      })
+      .then(function(dbContents) {
+        return res.render("shoppingcart", {
+          title: "ATW80 Shopping Cart",
+          dbContents: dbContents
+        });
       });
-    });
   });
 
   // Load Product page and pass in the product id
@@ -73,7 +67,8 @@ module.exports = function(app, passport) {
         where: { id: req.params.id }
       })
       .then(function(dbProducts) {
-        res.render("example", {
+        res.render("products", {
+          title: "ATW80 Product Details",
           products: dbProducts
         });
       });
@@ -101,7 +96,7 @@ module.exports = function(app, passport) {
               quantity: myParam3
             })
             .then(function(dbContents) {
-              res.json(JSON.stringify(dbContents));
+              res.redirect("/cart/" + myCartId);
             });
         });
     } else {
@@ -112,9 +107,18 @@ module.exports = function(app, passport) {
           quantity: myParam3
         })
         .then(function(dbContents) {
-          res.json(JSON.stringify(dbContents));
+          console.log("2");
+          // res.render("shoppingcart", {
+          //   title: "ATW80 Shopping Cart",
+          //   dbContents: dbContents
+          // });
+          res.redirect("/cart/" + myParam1);
         });
     }
+  });
+
+  app.get("/purchase", function(req, res) {
+    res.render("confirmation");
   });
   app.put("/purchase", function(req, res) {
     db.carts
@@ -128,22 +132,26 @@ module.exports = function(app, passport) {
       )
       .then(function(dbCart) {
         console.log(JSON.stringify(dbCart));
-        res.redirect("/products");
+        res.render("confirmation");
       });
   });
 
   app.get("/signup", function(req, res) {
-    res.render("signup");
+    res.render("signup", {
+      title: "ATW80 Signup"
+    });
   });
 
   app.get("/signin", function(req, res) {
-    res.render("signin");
+    res.render("signin", {
+      title: "ATW80 Signin"
+    });
   });
 
   app.post(
     "/signup",
     passport.authenticate("local-signup", {
-      successRedirect: "/dashboard",
+      successRedirect: "/products",
 
       failureRedirect: "/signup"
     })
@@ -152,7 +160,7 @@ module.exports = function(app, passport) {
   app.post(
     "/signin",
     passport.authenticate("local-signin", {
-      successRedirect: "/dashboard",
+      successRedirect: "/products",
 
       failureRedirect: "/signin"
     })
@@ -162,7 +170,7 @@ module.exports = function(app, passport) {
     res.render("dashboard");
   });
   app.get("/logout", function(req, res) {
-    res.redirect("products");
+    res.redirect("/products");
   });
 
   // Render 404 page for any unmatched routes
